@@ -1,0 +1,50 @@
+<% if user %>
+
+
+<h1>Hi <%= user.email %></h1>
+<form action="/logout" method="POST">
+<input type="submit" name="submit" value="Logout">
+</form>
+
+<br>
+
+<h1> Pending tasks till <%= Time.now %> </h1>
+<form action="/add_task" method="POST">
+<input type="text" name="content" /> <br>
+<input type="submit" value="Add Task" />
+</form>
+<ul>
+<% 
+if tasks
+tasks.each do |task|  %>
+
+<% if task.done %>
+	<li class="strikethrough">
+<% else %>
+	<li>
+<% end %>
+ 
+ <%= task.content  %>
+	
+	<form action="/toggle_task" method="POST">
+
+<input type="hidden" name="task_id" value="<%= task.id %>"/>
+<input type="submit" value="Toggle Task">
+
+	</form>
+
+
+</li>
+<% end 
+
+ end %>
+</ul>
+
+
+<style>
+	.strikethrough {
+		text-decoration: line-through;
+	}
+</style>
+
+<% end %>
